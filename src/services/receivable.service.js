@@ -6,16 +6,16 @@ export class ReceivableService {
       .select('*')
       .orderBy('created_at', 'desc');
 
-    //  const installmentStatus = await db('installment_status')
-    //   .select('*')
-    //  .whereIn('receivable_id', receivables.map(r => r.id));
-    return receivables;
-    // return receivables.map(receivable => ({
-    //  ...receivable,
-    // installmentStatus: installmentStatus
-    //  .filter(status => status.receivable_id === receivable.id)
-    //  .map(({ receivable_id, ...status }) => status)
-    //}));
+      const installmentStatus = await db('installment_status')
+       .select('*')
+      .whereIn('receivable_id', receivables.map(r => r.id));
+    
+    return receivables.map(receivable => ({
+      ...receivable,
+     installmentStatus: installmentStatus
+      .filter(status => status.receivable_id === receivable.id)
+      .map(({ receivable_id, ...status }) => status)
+    }));
   }
 
   async create(data) {
