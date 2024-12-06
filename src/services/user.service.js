@@ -45,7 +45,7 @@ export class UserService {
   async delete(id) {
     // Check for dependencies before deleting
     const hasReceivables = await db('receivables')
-      .where({ client_id: id })
+      .where({ clientId: id })
       .first();
 
     if (hasReceivables) {
