@@ -6,15 +6,15 @@ export class ReceivableService {
       .select('*')
       .orderBy('created_at', 'desc');
 
-      const installmentStatus = await db('installment_status')
+      const installmentStatus = await db('installmentStatus')
        .select('*')
-      .whereIn('receivable_id', receivables.map(r => r.id));
+      .whereIn('receivableId', receivables.map(r => r.id));
     
     return receivables.map(receivable => ({
       ...receivable,
      installmentStatus: installmentStatus
-      .filter(status => status.receivable_id === receivable.id)
-      .map(({ receivable_id, ...status }) => status)
+      .filter(status => status.receivableId === receivable.id)
+      .map(({ receivableId, ...status }) => status)
     }));
   }
 
@@ -40,9 +40,9 @@ export class ReceivableService {
 
     if (!receivable) return null;
 
-    const installmentStatus = await db('installment_status')
+    const installmentStatus = await db('installmentStatus')
       .where({ receivableId: id })
-      .orderBy('installment_number');
+      .orderBy('installmentNumber');
 
     return {
       ...receivable,
@@ -61,9 +61,9 @@ export class ReceivableService {
 
     if (!receivable) return null;
 
-    const installmentStatus = await db('installment_status')
+    const installmentStatus = await db('installmentStatus')
       .where({ receivableId: id })
-      .orderBy('installment_number');
+      .orderBy('installmentNumber');
 
     return {
       ...receivable,
@@ -90,23 +90,23 @@ export class ReceivableService {
         return null;
       }
 
-      const existingStatus = await trx('installment_status')
+      const existingStatus = await trx('installmentStatus')
         .where({ receivableId, installmentNumber })
         .first();
 
       if (existingStatus) {
-        await trx('installment_status')
+        await trx('installmentStatus')
           .where({ receivableId, installmentNumber })
           .update({
             ...updates,
             updated_at: trx.fn.now()
           });
       } else {
-        const installmentValue = (receivable.total_value - receivable.down_payment) / receivable.installments;
-        const firstInstallmentDate = new Date(receivable.first_installment_date);
+        const installmentValue = (receivable.totalValue - receivable.downPayment) / receivable.installments;
+        const firstInstallmentDate = new Date(receivable.firstInstallmentDate);
         const dueDate = new Date(firstInstallmentDate.setMonth(firstInstallmentDate.getMonth() + installmentNumber - 1));
 
-        await trx('installment_status')
+        await trx('installmentStatus')
           .insert({
             receivableId,
             installmentNumber,
