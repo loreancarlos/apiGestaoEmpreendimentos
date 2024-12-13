@@ -6,8 +6,8 @@ export function up(knex) {
     table.string('password').notNullable();
     table.enum('role', ['admin', 'user','broker']).notNullable().defaultTo('user');
     table.boolean('active').notNullable().defaultTo(true);
-    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
-    table.timestamp('last_login');
+    table.timestamp('createdAt').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('lastLogin');
   });
 }
 
