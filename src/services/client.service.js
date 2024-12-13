@@ -47,7 +47,7 @@ export class ClientService {
   async update(id, data) {
     const updateData = {
       ...data,
-      updated_at: db.fn.now()
+      updatedAt: db.fn.now()
     };
 
     if (data.cpf) {
