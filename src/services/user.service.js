@@ -4,7 +4,7 @@ import db from '../database/connection.js';
 export class UserService {
   async list() {
     return db('users')
-      .select('id', 'name', 'email', 'role', 'active', 'created_at', 'last_login');
+      .select('id', 'name', 'email', 'role', 'active', 'createdAt', 'lastLogin');
   }
 
   async create(data) {
@@ -15,7 +15,7 @@ export class UserService {
         ...data,
         password: hashedPassword
       })
-      .returning(['id', 'name', 'email', 'role', 'active', 'created_at']);
+      .returning(['id', 'name', 'email', 'role', 'active', 'createdAt']);
     
     return user;
   }
@@ -23,7 +23,7 @@ export class UserService {
   async findById(id) {
     return db('users')
       .where({ id })
-      .select('id', 'name', 'email', 'role', 'active', 'created_at', 'last_login')
+      .select('id', 'name', 'email', 'role', 'active', 'createdAt', 'lastLogin')
       .first();
   }
 
@@ -37,7 +37,7 @@ export class UserService {
     const [user] = await db('users')
       .where({ id })
       .update(updateData)
-      .returning(['id', 'name', 'email', 'role', 'active', 'created_at', 'last_login']);
+      .returning(['id', 'name', 'email', 'role', 'active', 'createdAt', 'lastLogin']);
     
     return user;
   }
@@ -52,7 +52,7 @@ export class UserService {
       .update({
         active: db.raw('NOT active')
       })
-      .returning(['id', 'name', 'email', 'role', 'active', 'created_at', 'last_login']);
+      .returning(['id', 'name', 'email', 'role', 'active', 'createdAt', 'lastLogin']);
     
     return user;
   }
