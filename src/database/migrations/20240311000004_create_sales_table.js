@@ -19,8 +19,8 @@ export function up(knex) {
       'waiting_seven_days',
       'waiting_invoice'
     ]).notNullable().defaultTo('waiting_contract');
-    table.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
-    table.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('createdAt').notNullable().defaultTo(knex.fn.now());
+    table.timestamp('updatedAt').notNullable().defaultTo(knex.fn.now());
   });
 }
 
