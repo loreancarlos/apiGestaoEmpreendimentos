@@ -13,6 +13,6 @@ export class AuthService {
   async updateLastLogin(userId) {
     await db('users')
       .where({ id: userId })
-      .update({ last_login: db.fn.now() });
+      .update({ lastLogin: db.fn.now() });
   }
 }
