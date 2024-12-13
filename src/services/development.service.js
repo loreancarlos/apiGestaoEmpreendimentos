@@ -26,7 +26,7 @@ export class DevelopmentService {
       .where({ id })
       .update({
         ...data,
-        updated_at: db.fn.now()
+        updatedAt: db.fn.now()
       })
       .returning('*');
 
