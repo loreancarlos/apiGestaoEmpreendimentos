@@ -4,7 +4,7 @@ export class SaleService {
   async list() {
     return db('sales')
       .select('*')
-      .orderBy('created_at', 'desc');
+      .orderBy('createdAt', 'desc');
   }
 
   async create(data) {
